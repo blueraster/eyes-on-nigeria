@@ -1,0 +1,445 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<themes>
+	<NODE heading="true" label="Forced Evictions"></NODE>
+	<NODE heading="false" label="Port Harcourt" 
+		id="PortHarcourt" location_image_url="flex_icons/NigeriaPortHarcourt.png"
+		toolTip="">
+			<stats>
+				<stat label="Damaged Locations" value="375"/>
+			</stats>
+			<image_layers>
+				<layer type="image" id="pharcourt_before" label="February 19, 2008" url="http://23.21.120.129/ArcGIS/rest/services/EONigeria/pharcourt_before/MapServer"/>
+				<layer type="image" id="pharcourt_after" label="April 11, 2010"  url="http://23.21.120.129/ArcGIS/rest/services/EONigeria/pharcourt_after/MapServer"/>
+			</image_layers>
+			<point_layers>
+				<layer type="point" id="pharcourt_damage" layer_id="0" url="http://23.21.120.129/ArcGIS/rest/services/EONigeria/pharcourt_damage/MapServer">
+					<legend>
+						<marker color="0xA50400" size="7" shape="circle" outlinecolor="0xffffff" outlinesize="0" label="Damage" />
+					</legend>
+				</layer>
+				<layer type="flickr" id="pharcourt_photos" tooltip_labelField="title">
+					<tag>eyesonnigeria:theme=forcedevictions</tag>
+					<tag>eyesonnigeria:location=portharcourt</tag>
+					<tooltip_data label="Description" format="LongText" fieldname="_content"/>
+					<tooltip_data label="Thumb" format="Image" fieldname="url_t"/>
+					<legend>
+						<marker url="config/markers/stories_r1_green.png" outlinecolor="0x000000" label="Stories & Photos"/>
+					</legend>
+				</layer>
+			</point_layers>
+			<description><![CDATA[The government is planning large-scale demolitions of Port Harcourt’s more than 401 waterfront settlements, which are home to approximately 200,000 people. Njemanze waterfront, pictured on this map, was demolished in August 2009. It is estimated between 13,800 and 19,000 people were forcibly evicted from their homes and left homeless and vulnerable to other human rights violations.]]></description>
+			<extent xmin="779012" ymin="532984" xmax="779817" ymax="533348" wkid="3857"/>
+	</NODE>
+	<NODE heading="false" label="Lagos" 
+		id="Lagos" location_image_url="flex_icons/NigeriaPortHarcourt.png"
+		toolTip="">
+			<point_layers>
+				<layer type="flickr" id="pharcourt_photos" tooltip_labelField="title">
+					<tag>eyesonnigeria:theme=forcedevictions</tag>
+					<tag>eyesonnigeria:location=lagos</tag>
+					<tooltip_data label="Description" format="LongText" fieldname="_content"/>
+					<tooltip_data label="Thumb" format="Image" fieldname="url_t"/>
+					<legend>
+						<marker url="config/markers/stories_r1_green.png" outlinecolor="0x000000" label="Stories & Photos"/>
+					</legend>
+				</layer>
+		
+			</point_layers>
+			<description><![CDATA[In April 2005, bulldozers demolished houses, churches, and medical clinics in the community of Makoko, Lagos. About 3,000 people lost their homes. They said that they had not been given prior notice, were not consulted on the planned evictions, and were not given adequate alternative housing. Explore the satellite images to see the extent of the demolitions and read the stories of those affected.]]></description>
+			<extent xmin="376280.68851725245" ymin="724034.3378023007" xmax="377904.9753683553" ymax="725140.2860553309" wkid="3857"/>
+	</NODE>
+
+	<NODE heading="true" label="Policing and Justice"></NODE>
+	<NODE heading="false" label="Police Brutality" legendTitle="Age of Victim"
+		id="PoliceBrutality" location_image_url=""
+		toolTip="">
+			<stats>
+				<stat label="Police Brutality Reports" value="31"/>
+			</stats>
+			
+			<point_layers>
+				<layer type="flickr" id="police_brutality_photos" tooltip_labelField="title">
+					<tag>eyesonnigeria:subtheme=policebrutality</tag>
+					<tooltip_data label="Description" format="LongText" fieldname="_content"/>
+					<tooltip_data label="Thumb" format="Image" fieldname="url_t"/>
+					<legend>
+						<marker url="config/markers/brutality_r1_red.png" outlinecolor="0x000000" fieldname="age" value="juvenile" label="Juvenile"/>
+						<marker url="config/markers/brutality_r1_yellow.png" outlinecolor="0x000000" fieldname="age" value="adult" label="Adult"/>
+						<marker url="config/markers/brutality_r1_orange.png" outlinecolor="0x000000" fieldname="age" value="unknown" label="Unknown"/>
+					</legend>
+				</layer>
+			</point_layers>
+			<description><![CDATA[The Nigeria Police Force (NPF) is responsible for hundreds of extrajudicial executions, other unlawful killings and enforced disappearances every year, most of which go uninvestigated and unpunished. The families of the victims usually have no recourse to justice or redress. Click on the camera icons on the map to read stories of victims of police brutality collected by Amnesty International.]]></description>
+			<extent xmin="298552" ymin="476376" xmax="1634012" ymax="1561758"/>
+	</NODE>
+	<NODE heading="false" label="Excessive Use of Force" 
+		id="ExcessiveForce" location_image_url="" 
+		toolTip="">
+			<point_layers>
+				<layer type="flickr" id="excessive_force_photos" tooltip_labelField="title">
+					<tag>eyesonnigeria:subtheme=excessiveforce</tag>
+					<tooltip_data label="Description" format="LongText" fieldname="_content"/>
+					<tooltip_data label="Thumb" format="Image" fieldname="url_t"/>
+					<legend>
+						<marker url="config/markers/stories_r1_green.png" outlinecolor="0x000000" label="Stories & Photos"/>
+					</legend>
+				</layer>
+				<layer type="youtube" id="force_videos" tooltip_labelField="title">
+					<!--
+						<tag>forcedevictions</tag>
+					-->
+					<tooltip_data label="Description" format="LongText" fieldname="description"/>
+					<tooltip_data label="Thumb" format="Image" fieldname="thumbnail"/>
+					<legend>
+						<marker url="config/markers/video_r1_purple.png" outlinecolor="0x000000" label="Stories & Videos"/>
+					</legend>
+				</layer>
+			</point_layers>
+			<description><![CDATA[On 12 October 2009, armed security forces opened fire on a crowd of people peacefully protesting against the proposed demolition of their homes in Bundu community, Port Harcourt. At least twelve people were shot and seriously injured. Eyewitnesses told Amnesty International they saw six dead bodies piled in the back of a police pick-up truck. The total number of dead remains unknown.]]></description>
+			<extent xmin="298552" ymin="476376" xmax="1634012" ymax="1561758"/>
+	</NODE>
+	<NODE heading="false" label="Death Penalty" 
+		id="DeathPenalty" location_image_url="" legendTitle="Number of people on Death Row"
+		toolTip="">
+			<theme_layers>
+				<layer type="theme" id="death_row" layer_id="0" tooltip_labelField="STATE" url="http://23.21.120.129/ArcGIS/rest/services/EONigeria/death_row/MapServer">
+					<tooltip_data label="Men" format="" precision="0" fieldname="MEN"/>
+					<tooltip_data label="Women" format="," precision="0" fieldname="WOMEN"/>
+					<tooltip_data label="Juveniles" format="" precision="0" fieldname="JUVENILES"/>
+					<tooltip_data label="Total" format="" precision="0" fieldname="TOTAL"/>
+					<legend>
+						<marker color="0xFEEDDE" size="16" shape="square" outlinecolor="0x000000" format="," precision="0" label="0 or n/a"  alpha="0.5"/>
+						<marker color="0xFDBE85" size="16" shape="square" outlinecolor="0x000000" fieldname="TOTAL" valuemin="1" valuemax="9"  format="," precision="0" alpha="0.5"/>
+						<marker color="0xFD8D3C" size="16" shape="square" outlinecolor="0x000000" fieldname="TOTAL" valuemin="10" valuemax="24" format="," precision="0" alpha="0.5"/>
+						<marker color="0xD94701" size="16" shape="square" outlinecolor="0x000000" fieldname="TOTAL" valuemin="25" format="," precision="0" alpha="0.5"/>
+						<!--
+						<marker color="0xEFF3FF" size="10" shape="square" outlinecolor="0x000000" format="," precision="0" label="0 or n/a"/>
+						<marker color="0xC6DBEF" size="16" shape="square" outlinecolor="0x000000" fieldname="TOTAL" valuemin="1" valuemax="9"  format="," precision="0"/>
+						<marker color="0x9ECAE1" size="16" shape="square" outlinecolor="0x000000" fieldname="TOTAL" valuemin="10" valuemax="19"  format="," precision="0"/>
+						<marker color="0x6BAED6" size="16" shape="square" outlinecolor="0x000000" fieldname="TOTAL" valuemin="20" valuemax="29"  format="," precision="0"/>
+						<marker color="0x3182BD" size="16" shape="square" outlinecolor="0x000000" fieldname="TOTAL" valuemin="30" valuemax="39" format="," precision="0"/>
+						<marker color="0x08519C" size="16" shape="square" outlinecolor="0x000000" fieldname="TOTAL" valuemin="40" format="," precision="0"/>
+						-->
+					</legend>
+				</layer>
+			</theme_layers>
+			<description><![CDATA[Despite a moratorium, the government continues to sentence scores of people to death every year, many after unfair trials and including juveniles. The 2008 data presented on this map shows where the 720-plus men and 11 women on death row were located, by state. Since this data was collected, the total number of death row inmates in Nigeria has ballooned to over 870 prisoners. Updated data is forthcoming.]]></description>
+			<extent xmin="298552" ymin="476376" xmax="1634012" ymax="1561758"/>
+	</NODE>
+	
+	<NODE heading="true" label="Conflict in the Delta"></NODE>
+	<NODE heading="false" label="Ayakoromo" 
+		id="Ayakoromor" location_image_url="flex_icons/NigeriaDelta.png"
+		toolTip="">
+			<point_layers>
+				<layer type="flickr" id="conflict_delta_photos" tooltip_labelField="title">
+					<tag>eyesonnigeria:subtheme=deltaviolence</tag>
+					<tooltip_data label="Description" format="LongText" fieldname="_content"/>
+					<tooltip_data label="Thumb" format="Image" fieldname="url_t"/>
+					<legend>
+						<marker url="config/markers/stories_r1_green.png" outlinecolor="0x000000" label="Stories & Photos"/>
+					</legend>
+				</layer>
+			</point_layers>
+			<stats>
+			</stats>
+			<description><![CDATA[On 1 December 2010, the community of Ayakoromo was razed by the Joint Task Force (JTF). According to residents of the community, the JTF fired at the community from gun boats, then fired missiles and bombs from at least two Mil Mi-24/25 military helicopters, before entering the community on foot. At least 120 homes were burnt in the attack. Community leaders and NGOs put the death toll at 51.]]></description>
+			<extent xmin="638249.9952930771" ymin="592913.5710262966" xmax="639874.2821441798" ymax="594019.5192793268"/>
+	</NODE>
+	<NODE heading="false" label="Benikrukru" 
+		id="Benikrukru" location_image_url="flex_icons/NigeriaDelta.png"
+		toolTip="">
+			<stats>
+				<stat label="Est. Buildings Damaged" value="27"/>
+			</stats>
+			<image_layers>
+				<layer type="image" id="benikrukru_before" label="April 24, 2008" url="http://23.21.120.129/ArcGIS/rest/services/EONigeria/benikrukru_before/MapServer"/>
+				<layer type="image" id="benikrukru_after" label="December 5, 2009" url="http://23.21.120.129/ArcGIS/rest/services/EONigeria/benikrukru_after/MapServer"/>
+			</image_layers>
+			<point_layers>
+				<layer type="point" id="delta_damage" layer_id="5" url="http://23.21.120.129/ArcGIS/rest/services/EONigeria/delta_damage/MapServer">
+					<legend>
+						<marker color="0xA50400" size="7" shape="circle" outlinecolor="0xffffff" outlinesize="0" label="Damage" />
+					</legend>
+				</layer>
+			</point_layers>
+			<description><![CDATA[During a May 2009 offensive by the Joint Task Force (JFT), thousands of people in the Niger Delta were caught in the crossfire between the JFT and armed groups. The JTF attacked several communities of the Gbaramatu Kingdom using helicopters equipped with machine guns on 15 May. Explore the satellite images to see the damage to civilian infrastructure caused by the attack.]]></description>
+			<extent xmin="588523" ymin="629018" xmax="589263" ymax="629308"/>
+	</NODE>
+	<NODE heading="false" label="Kurutie" 
+		id="Kurutie" location_image_url="flex_icons/NigeriaDelta.png"
+		toolTip="">
+			<stats>
+				<stat label="Est. Buildings Damaged" value="8"/>
+			</stats>
+			<image_layers>
+				<layer type="image" id="kurutie_before" label="September 13, 2008" url="http://23.21.120.129/ArcGIS/rest/services/EONigeria/kurutie_before/MapServer"/>
+				<layer type="image" id="kurutie_after" label="December 5, 2009" url="http://23.21.120.129/ArcGIS/rest/services/EONigeria/kurutie_after/MapServer"/>
+			</image_layers>
+			<point_layers>
+				<layer type="point" id="delta_damage" layer_id="4" url="http://23.21.120.129/ArcGIS/rest/services/EONigeria/delta_damage/MapServer">
+					<legend>
+						<marker color="0xA50400" size="7" shape="circle" outlinecolor="0xffffff" outlinesize="0" label="Damage" />
+					</legend>
+				</layer>
+			</point_layers>
+			<description><![CDATA[During a May 2009 offensive by the Joint Task Force (JFT), thousands of people in the Niger Delta were caught in the crossfire between the JFT and armed groups. The JTF attacked several communities of the Gbaramatu Kingdom using helicopters equipped with machine guns on 15 May. Explore the satellite images to see the damage to civilian infrastructure caused by the attack.]]></description>
+			<extent xmin="593075.2757701043" ymin="622460.7877611724" xmax="593481.347482925" ymax="622737.2748244606"/>
+	</NODE>
+	<NODE heading="false" label="Okerenkoko" 
+		id="Okerenkoko" location_image_url="flex_icons/NigeriaDelta.png"
+		toolTip="">
+			<stats>
+				<stat label="Est. Buildings Damaged" value="230"/>
+				<stat label="Est. Buildings Restored" value="66"/>
+			</stats>
+			<image_layers>
+				<layer type="image" id="okerenkoko_before" label="April 29, 2009" url="http://23.21.120.129/ArcGIS/rest/services/EONigeria/okerenkoko_before/MapServer"/>
+				<layer type="image" id="okerenkoko_intermediate" label="December 5, 2009" url="http://23.21.120.129/ArcGIS/rest/services/EONigeria/okerenkoko_intermediate/MapServer"/>
+				<layer type="image" id="okerenkoko_after" label="February 28, 2010" url="http://23.21.120.129/ArcGIS/rest/services/EONigeria/okerenkoko_after/MapServer"/>
+			</image_layers>
+			<point_layers>
+				<layer type="point" id="delta_damage" layer_id="0" url="http://23.21.120.129/ArcGIS/rest/services/EONigeria/delta_damage/MapServer">
+					<legend>
+						<marker color="0xA50400" size="7" shape="circle" outlinecolor="0xffffff" outlinesize="0" label="Damage" />
+					</legend>
+				</layer>
+				<layer type="point" id="delta_damage" layer_id="1" url="http://23.21.120.129/ArcGIS/rest/services/EONigeria/delta_damage/MapServer">
+					<legend>
+						<marker color="0xE5971B" size="7" shape="circle" outlinecolor="0xffffff" outlinesize="0" label="Reconstruction" />
+					</legend>
+				</layer>
+			</point_layers>
+			<description><![CDATA[During a May 2009 offensive by the Joint Task Force (JFT), thousands of people in the Niger Delta were caught in the crossfire between the JFT and armed groups. The JTF attacked several communities of the Gbaramatu Kingdom, including Okerenkoko, using helicopters equipped with machine guns on 15 May. Explore the satellite images to see the damage to civilian infrastructure caused by the attack.]]></description>
+			<extent xmin="599551.6559885012" ymin="626592.2410599934" xmax="601175.9428396039" ymax="627698.1893130236"/>
+	</NODE>
+	<NODE heading="false" label="Oporoza" 
+		id="Oporoza" location_image_url="flex_icons/NigeriaDelta.png"
+		toolTip="">
+			<image_layers>
+				<layer type="image" id="Oporoza_before" label="November 29, 2007" url="http://23.21.120.129/ArcGIS/rest/services/EONigeria/Oporoza_before/MapServer"/>
+				<layer type="image" id="Oporoza_intermediate" label="December 5, 2009" url="http://23.21.120.129/ArcGIS/rest/services/EONigeria/Oporoza_intermediate/MapServer"/>
+				<layer type="image" id="Oporoza_after" label="February 28, 2010" url="http://23.21.120.129/ArcGIS/rest/services/EONigeria/Oporoza_after/MapServer"/>
+			</image_layers>
+			<point_layers>
+				<layer type="point" id="delta_damage" layer_id="3" url="http://23.21.120.129/ArcGIS/rest/services/EONigeria/delta_damage/MapServer">
+					<legend>
+						<marker color="0xA50400" size="7" shape="circle" outlinecolor="0xffffff" outlinesize="0" label="Damage" />
+					</legend>
+				</layer>
+				<layer type="point" id="delta_damage" layer_id="2" url="http://23.21.120.129/ArcGIS/rest/services/EONigeria/delta_damage/MapServer">
+					<legend>
+						<marker color="0xE5971B" size="7" shape="circle" outlinecolor="0xffffff" outlinesize="0" label="Reconstruction" />
+					</legend>
+				</layer>
+			</point_layers>
+			<stats>
+				<stat label="Est. Buildings Damaged" value="4"/>
+				<stat label="Est. Buildings Restored" value="2"/>
+			</stats>
+			<description><![CDATA[On May 15, 2009, the Joint Task Force (JTF) attacked several communities of the Gbaramatu Kingdom, including Oporoza where around 500 people had gathered for a yearly festival, using helicopters equipped with machine guns, during an offensive against armed groups in the Niger Delta. Explore the satellite images to see the damage to civilian infrastructure caused by the attack.]]></description>
+			<extent xmin="586995.3486209703" ymin="623607.4717864624" xmax="587401.4203337911" ymax="623883.9588497506"/>
+	</NODE>
+	
+	<NODE heading="true" label="Communal Conflict"></NODE>
+	<NODE heading="false" label="Jos" 
+		id="Jos" location_image_url="flex_icons/NigeriaJos.png"
+		toolTip="">
+			<image_layers>
+				<layer type="image" id="jos_before" label="June 12, 2007" url="http://23.21.120.129/ArcGIS/rest/services/EONigeria/jos_before/MapServer"/>
+				<layer type="image" id="jos_after" label="January 27, 2010" url="http://23.21.120.129/ArcGIS/rest/services/EONigeria/jos_after/MapServer"/>
+			</image_layers>
+			<point_layers>
+				<layer type="point" id="jos_destruction" layer_id="0" url="http://23.21.120.129/ArcGIS/rest/services/EONigeria/jos_destruction/MapServer">
+					<legend>
+						<marker color="0xA50400" size="16" shape="square" outlinecolor="0xffffff" outlinesize="0" label="Damaged Community" alpha=".5"/>
+					</legend>
+				</layer>
+			</point_layers>
+			<description><![CDATA[Communal conflict and insecurity is frequent in many places, especially Plateau state, where thousands of people have been killed in repeated incidents of violence in 2001, 2004, 2008 and 2010. Comparative satellite imagery of the city of Jos demonstrates destruction to homes and the telltale signs of violence scarred on the city’s landscape over the course of a few years.]]></description>
+			<extent xmin="989891.7958781751" ymin="1109266.3727911778" xmax="992170.574783987" ymax="1111917.7822098897"/>
+	</NODE>
+	
+	<NODE heading="true" label="Extractive Industries"></NODE>
+		<NODE heading="false" label="Bodo Oil Spill (true color)" 
+		id="Bodo" location_image_url="flex_icons/NigeriaDelta.png">
+			<image_layers>
+				<layer type="image" id="IKONOS_4Dec2006" label="December 4, 2006" url="http://23.21.120.129/ArcGIS/rest/services/Bodo/IKONOS_4Dec2006_TC/MapServer"/>
+				<layer type="image" id="DG_26Jan2009" label="January 26, 2009" url="http://23.21.120.129/ArcGIS/rest/services/Bodo/DG_26Jan2009_TC/MapServer"/>
+				<layer type="image" id="IKONOS_8Jan2011" label="January 8, 2011" url="http://23.21.120.129/ArcGIS/rest/services/Bodo/IKONOS_8Jan2011_TC/MapServer"/>
+			</image_layers>
+			<point_layers>
+				<layer type="flickr" id="conflict_delta_photos" tooltip_labelField="title">
+					<tag>eyesonnigeria:subtheme=bodospill</tag>
+					<tooltip_data label="Description" format="LongText" fieldname="_content"/>
+					<tooltip_data label="Thumb" format="Image" fieldname="url_t"/>
+					<legend>
+						<marker url="config/markers/stories_r1_green.png" outlinecolor="0x000000" label="Oil Spill Photo"/>
+					</legend>
+				</layer>
+				<layer type="youtube" id="bodospill" tooltip_labelField="title">
+					<!--
+						<tag>forcedevictions</tag>
+					-->
+					<tooltip_data label="Description" format="LongText" fieldname="description"/>
+					<tooltip_data label="Thumb" format="Image" fieldname="thumbnail"/>
+					<legend>
+						<marker url="config/markers/video_r1_purple.png" outlinecolor="0x000000" label="Oil Spill Video"/>
+					</legend>
+				</layer>
+			</point_layers>
+			<description><![CDATA[In August and December 2008, two major oil spills disrupted the lives of the approximately 69,000 people living in Bodo, a town in the Niger Delta. Both spills continued for weeks before they were stopped. Three years on, the failure of Shell to clean up the oil that was spilled continues to have catastrophic consequences for the community. As satellite images illustrate, oil pollution remains highly visible.
+			]]></description>
+			<extent xmin="807400.2667" ymin="514790.9461" xmax="808309.412999999" ymax="515729.082699999"/>
+	</NODE>
+	<NODE heading="false" label="Bodo Oil Spill (false color)" 
+		id="Bodo" location_image_url="flex_icons/NigeriaDelta.png">
+			<image_layers>
+				<layer type="image" id="IKONOS_4Dec2006" label="December 4, 2006" url="http://23.21.120.129/ArcGIS/rest/services/Bodo/IKONOS_4Dec2006/MapServer"/>
+				<layer type="image" id="DG_26Jan2009" label="January 26, 2009" url="http://23.21.120.129/ArcGIS/rest/services/Bodo/DG_26Jan2009/MapServer"/>
+				<layer type="image" id="IKONOS_8Jan2011" label="January 8, 2011" url="http://23.21.120.129/ArcGIS/rest/services/Bodo/IKONOS_8Jan2011/MapServer"/>
+			</image_layers>
+			<point_layers>
+				<layer type="flickr" id="conflict_delta_photos" tooltip_labelField="title">
+					<tag>eyesonnigeria:subtheme=bodospill</tag>
+					<tooltip_data label="Description" format="LongText" fieldname="_content"/>
+					<tooltip_data label="Thumb" format="Image" fieldname="url_t"/>
+					<legend>
+						<marker url="config/markers/stories_r1_green.png" outlinecolor="0x000000" label="Oil Spill Photo"/>
+					</legend>
+				</layer>
+				<layer type="youtube" id="bodospill" tooltip_labelField="title">
+					<!--
+						<tag>forcedevictions</tag>
+					-->
+					<tooltip_data label="Description" format="LongText" fieldname="description"/>
+					<tooltip_data label="Thumb" format="Image" fieldname="thumbnail"/>
+					<legend>
+						<marker url="config/markers/video_r1_purple.png" outlinecolor="0x000000" label="Oil Spill Video"/>
+					</legend>
+				</layer>
+			</point_layers>
+			<description><![CDATA[In August and December 2008, two major oil spills disrupted the lives of the approximately 69,000 people living in Bodo, a town in the Niger Delta. Both spills continued for weeks before they were stopped. Three years on, the failure of Shell to clean up the oil that was spilled continues to have catastrophic consequences for the community. As satellite images illustrate, oil pollution remains highly visible.
+			]]></description>
+			<extent xmin="807400.2667" ymin="514790.9461" xmax="808309.412999999" ymax="515729.082699999"/>
+	</NODE>
+	<NODE heading="false" label="All Flares" 
+		id="flare2" location_image_url="http://23.21.120.129/ArcGIS/rest/services/EONigeria/flare2/MapServer"
+		toolTip="">
+			<image_layers>
+				<layer type="image" id="flare3" label="" url="http://23.21.120.129/ArcGIS/rest/services/EONigeria/flare3/MapServer"/>
+			</image_layers>
+			<point_layers>
+				<layer type="flare" id="flaring_serverversion" layer_id="0" 
+						years="2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010"
+						tooltip_labelField="Label" url="http://23.21.120.129/ArcGIS/rest/services/EONigeria/flaring_serverversion/MapServer">
+					<tooltip_data label="First Observed" format="" precision="0" fieldname="First_Obse"/>
+					<tooltip_data label="Last Observed" format="" precision="0" fieldname="Last_Obse"/>
+					<legend>
+						<marker url="config/markers/gasflare_r1.png" outlinecolor="0x000000" label="Gas Flares"/>
+					</legend>
+				</layer>
+				<layer type="flickr" id="extractive_photos" tooltip_labelField="title">
+					<tag>eyesonnigeria:subtheme=gasflaring</tag>
+					<tooltip_data label="Description" format="LongText" fieldname="_content"/>
+					<tooltip_data label="Thumb" format="Image" fieldname="url_t"/>
+					<legend>
+						<marker url="config/markers/stories_r1_green.png" outlinecolor="0x000000" label="Stories & Photos"/>
+					</legend>
+				</layer>
+			</point_layers>
+			<description><![CDATA[When oil is pumped out of the ground, the gas produced is separated and, in Nigeria, most of it is burnt as waste in massive flares, which cause serious discomfort to people living near the flare sites. By using satellite imagery, the locations of 75 gas flares have been identified across the region, as shown on this map.]]></description>
+			<extent xmin="521106" ymin="473608" xmax="932031" ymax="687632"/>
+	</NODE>
+	<NODE heading="false" label="Imode" 
+		id="flare1" location_image_url="flex_icons/NigeriaDelta.png"
+		toolTip="">
+			<image_layers>
+				<layer type="image" id="flare" label="" url="http://23.21.120.129/ArcGIS/rest/services/EONigeria/flare/MapServer"/>
+			</image_layers>
+			<point_layers>
+				<layer type="point" id="flaring_serverversion" layer_id="0" url="http://23.21.120.129/ArcGIS/rest/services/EONigeria/flaring_serverversion/MapServer">
+					<legend>
+						<marker url="config/markers/gasflare_r1.png" outlinecolor="0x000000" label="Gas Flares"/>
+						<marker color="0x000000" size="16" shape="circle" outlinecolor="0xe60000" label="11.6ºC / 20.9ºF above ambient" fieldname="x" value="dne"/>
+						<marker color="0x000000" size="16" shape="circle" outlinecolor="0xe69800" label="9.2ºC / 16.6ºF above ambient" fieldname="x" value="dne"/>
+						<marker color="0x000000" size="16" shape="circle" outlinecolor="0xffff00" label="4.3ºC / 7.7ºF above ambient" fieldname="x" value="dne"/>
+					</legend>
+				</layer>
+			</point_layers>
+			<stats>
+			</stats>
+			<dynamic_layers>
+				<layer type="dynamic" id="flaring_serverversion" layers="3,4,5" url="http://23.21.120.129/ArcGIS/rest/services/EONigeria/flaring_serverversion/MapServer"> </layer>
+			</dynamic_layers>
+			<description><![CDATA[The radii around each flare location demonstrate temperatures elevated above the normal ambient temperature for the area. The inner red radii, which occur approximately 500m from the center of each flare, represent temperatures that are 11.6ºC / 20.9ºF above ambient; the 1km orange radii, 9.2ºC / 16.6ºF above ambient; in the 2km yellow radii, 4.3ºC / 7.7ºF above ambient.]]></description>
+			<extent xmin="651870.5162417534" ymin="604363.5902557774" xmax="658367.6636459845" ymax="608787.3832677759"/>
+	</NODE>
+	<NODE heading="false" label="Escravos" 
+		id="flare2" location_image_url="flex_icons/NigeriaDelta.png"
+		toolTip="">
+			<image_layers>
+				<layer type="image" id="flare2" label="" url="http://23.21.120.129/ArcGIS/rest/services/EONigeria/flare2/MapServer" />
+			</image_layers>
+			<point_layers>
+				<layer type="point" id="flaring_serverversion" layer_id="0" url="http://23.21.120.129/ArcGIS/rest/services/EONigeria/flaring_serverversion/MapServer">
+					<legend>
+						<marker url="config/markers/gasflare_r1.png" outlinecolor="0x000000" label="Gas Flares"/>
+						<marker color="0x000000" size="16" shape="circle" outlinecolor="0xe60000" label="11.6ºC / 20.9ºF above ambient" fieldname="x" value="dne"/>
+						<marker color="0x000000" size="16" shape="circle" outlinecolor="0xe69800" label="9.2ºC / 16.6ºF above ambient" fieldname="x" value="dne"/>
+						<marker color="0x000000" size="16" shape="circle" outlinecolor="0xffff00" label="4.3ºC / 7.7ºF above ambient" fieldname="x" value="dne"/>
+					</legend>
+				</layer>
+			</point_layers>
+			<stats>
+			</stats>
+			<dynamic_layers>
+				<layer type="dynamic" id="flaring_serverversion" layers="3,4,5" url="http://23.21.120.129/ArcGIS/rest/services/EONigeria/flaring_serverversion/MapServer"> </layer>
+			</dynamic_layers>
+			<description><![CDATA[The radii around each flare location demonstrate temperatures elevated above the normal ambient temperature for the area. The inner red radii, which occur approximately 500m from the center of each flare, represent temperatures that are 11.6ºC / 20.9ºF above ambient; the 1km orange radii, 9.2ºC / 16.6ºF above ambient; in the 2km yellow radii, 4.3ºC / 7.7ºF above ambient.]]></description>
+			<extent xmin="571433.7131488972" ymin="629395.4508330777" xmax="574682.2868511028" ymax="631607.3473391383"/>
+	</NODE>
+	<NODE heading="false" label="Ebocha" 
+		id="flare4" location_image_url="flex_icons/NigeriaDelta.png"
+		toolTip="">
+			<image_layers>
+				<layer type="image" id="flare4" label="" url="http://23.21.120.129/ArcGIS/rest/services/EONigeria/flare4/MapServer"/>
+			</image_layers>
+			<point_layers>
+				<layer type="point" id="flaring_serverversion" layer_id="0" url="http://23.21.120.129/ArcGIS/rest/services/EONigeria/flaring_serverversion/MapServer">
+					<legend>
+						<marker url="config/markers/gasflare_r1.png" outlinecolor="0x000000" label="Gas Flares"/>
+						<marker color="0x000000" size="16" shape="circle" outlinecolor="0xe60000" label="11.6ºC / 20.9ºF above ambient" fieldname="x" value="dne"/>
+						<marker color="0x000000" size="16" shape="circle" outlinecolor="0xe69800" label="9.2ºC / 16.6ºF above ambient" fieldname="x" value="dne"/>
+						<marker color="0x000000" size="16" shape="circle" outlinecolor="0xffff00" label="4.3ºC / 7.7ºF above ambient" fieldname="x" value="dne"/>
+					</legend>
+				</layer>
+			</point_layers>
+			<stats>
+			</stats>
+			<dynamic_layers>
+				<layer type="dynamic" id="flaring_serverversion" layers="3,4,5" url="http://23.21.120.129/ArcGIS/rest/services/EONigeria/flaring_serverversion/MapServer"> </layer>
+			</dynamic_layers>
+			<description><![CDATA[The radii around each flare location demonstrate temperatures elevated above the normal ambient temperature for the area. The inner red radii, which occur approximately 500m from the center of each flare, represent temperatures that are 11.6ºC / 20.9ºF above ambient; the 1km orange radii, 9.2ºC / 16.6ºF above ambient; in the 2km yellow radii, 4.3ºC / 7.7ºF above ambient.]]></description>
+			<extent xmin="743665.8917995348" ymin="607510.5943065136" xmax="746914.4655017405" ymax="609722.4908125742"/>
+	</NODE>	
+	
+	<NODE heading="true" label="Global Activism"></NODE>
+	<NODE heading="false" label="Activism Photos"> 
+			<point_layers>
+				<layer type="flickr" id="extractive_photos" tooltip_labelField="title">
+					<tag>eyesonnigeria:theme=activism</tag>
+					<tooltip_data label="Description" format="LongText" fieldname="_content"/>
+					<tooltip_data label="Thumb" format="Image" fieldname="url_t"/>
+					<legend>
+						<marker url="config/markers/stories_r1_green.png" outlinecolor="0x000000" label="Stories & Photos"/>
+					</legend>
+				</layer>
+			</point_layers>
+			<description><![CDATA[Amnesty groups throughout the world have mobilized thousands of people to take action on human rights concerns in Nigeria. Activists have demonstrated, petitioned, rallied, and marched, demanding an end to human rights abuses related to forced evictions, policing and justice, and the extractive industries. Click on the camera icon to view photos and videos of AI activism throughout the world.]]></description>
+			
+			<extent xmin="-18623990" ymin="-6520915" xmax="20550903" ymax="15629923"/>
+			
+	</NODE>
+	
+</themes>

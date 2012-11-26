@@ -1,0 +1,228 @@
+/* Eyes on Pakistan CSS */
+
+body, html {
+	margin: 0; padding: 0;
+	background: #fff;
+	font: 14px Arial, Verdana,  Helvetica, Sans-serif;
+	color: #4b4b4b;
+}
+
+.containingbox{
+	width: 900px;
+}
+		
+.floatleft{
+	float: left;
+	width: 250px;
+	height: 202px;
+	padding-right: 20px;
+	padding-bottom: 10px;
+
+}
+a {
+	text-decoration: none;
+	color: #5fa630;
+}
+a:hover {
+	color: #2b87c8;
+}
+
+.clear {
+	clear: both;
+	height: 1px;
+}
+
+/* ---------- NAV ---------- */
+
+#nav, #subnav, #mapsubnav {
+	float:left;
+	width:100%;
+	margin-left:0;
+	margin-right:-100%;
+	padding:0;
+	text-align: center;
+}
+#nav {
+	/*margin: 2px 0 0;*/
+	background: url(images/dolphin_bg.gif) repeat-x;
+	height: 44px;
+}
+#mapsubnav {
+	background-color: #000;
+	height: 4px;
+}
+/*.navinner {
+	width:1024px;
+	margin-left:auto;
+	margin-right:auto;
+}*/
+#nav ul, #subnav ul { 
+	float: left;
+	width: 100%;
+	overflow:hidden;
+	margin: 0; padding: 0 0 0 10px; 
+	list-style: none; 
+}
+#nav ul {
+	text-transform: uppercase;
+} 
+#nav ul li { 
+	float: left;
+	/*width:16%;*/
+}
+#nav ul li img {
+	
+	border: 0;
+	vertical-align:top;
+	height:46px;
+
+
+}
+#nav ul li a { 
+	
+	display: block; 
+	float: left; 
+	overflow:hidden;
+	padding: 0 15px; 
+	line-height: 46px;
+	font-size: 12px;
+	letter-spacing: 0.05em;
+	color: #fff900;
+	text-decoration: none;
+	font-weight: bolder;
+	width:auto;
+}
+#nav ul li a:hover { 
+	text-decoration: none;  
+	background: url(images/dolphin_bg-OVER.gif) repeat-x;
+	color: #00aef0;
+}
+
+#nav ul li a.current,#nav ul li a.current:hover{
+border-top: 2px solid #000000;
+color: #00aef0;
+background:#000000 url(images/dolphin_bg-OVER.gif) repeat-x;
+line-height:365%;
+}
+
+#nav ul li a#takeaction {
+	background: transparent url(images/actionOFF.gif) right;
+	color: #000;
+}
+#nav ul li a#takeaction:hover {
+	background: transparent url(images/actionON.gif) right;
+	color: #fff;
+}
+
+#foot {
+	float:left;
+	width:100%;
+	margin-left:0;
+	margin-right:-100%;
+	padding:0;
+	
+	/*margin: 2px 0 0;*/
+
+}
+#foot .footinner {
+	width:1024px;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+/* ---------- SUBNAV ---------- */
+
+#subnav {
+	clear: both;
+	/*background: url(images/subnav_bg.gif) repeat-x;*/
+	background-color: #fef9ea;
+	height: 31px;
+}
+#subnav ul { 
+	margin: 0; padding: 0; 
+	list-style: none; 
+} 
+#subnav ul li { 
+	float: left;
+}
+#subnav ul li a { 
+	display: block; 
+	float: left; 
+	padding: 0 12px; 
+	line-height: 31px;
+	font-size: 11px;
+	text-decoration: none;
+	font-weight: bolder;
+	color: #000;
+	/*background: url(images/subnav_bg.gif) repeat-x;*/
+}
+#subnav ul li a:hover { 
+	color: #00aef0;
+}
+#subnav ul li a.current,#subnav ul li a.current:hover{
+	font-style: italic;
+}
+#mapsubnav {
+    clear: both;
+	background-color: #000;
+	height: 3px;
+	z-index: 999;
+}
+
+
+/* ---------- Image and video resizing ---------- */
+
+a.resizable {
+	overflow: hidden;
+	float: left;
+	padding-right: 12px;
+	padding-bottom: 3px;
+	border: 0;
+	text-decoration: none;
+	color: #000;
+}
+a.resizable img {
+	border: 0;
+}
+img.closeButton {
+	float: right;
+	border: 0;
+}
+span.imgCaption {
+	font-size: 0.7em;
+}
+span.photoCredit {
+	display: none;
+	font-size: 0.7em;
+}
+p#video01 , p#video01_still {
+	display: none;
+}
+
+/* ---------- Main Content: ---------- */
+
+table {
+	background-color: #fff;
+}
+table#masthead {
+	background-color: #fef9ea;
+}
+
+td.leftContent {
+	padding-left: 20px;
+	padding-right: 10px;
+}
+
+td.rightContent {
+	vertical-align: top;
+	padding-left: 15px;
+	padding-right: 25px;
+}
+
+/* ---------- FOOTER ---------- */
+
+#footer { 
+	background-color: #e5e1d3;
+	font-size: 0.8em;
+}
+

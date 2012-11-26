@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<config>
+<!--    <youtube_api_key>AI39si4lg2nRoV7nunqWFOCt--moALUMEr67yuD1Bez7A3vzqWF3f7JWAoCaaPq8BmSe0pUIPnS4XEkT5n7NVrLB-IgIKf801A</youtube_api_key>-->
+    <youtube_api_key>AI39si4_cJWM1arhjqQT8nnj_Z-JgZ8WHePAI205av16j_Hy0pRmeQ2NeTSsoNX4mBPnCzJLLhJL8w7h2cGmaI9X9Ssa-PI9Rg</youtube_api_key>
+    <youtube_user_id>AmnestyUSA</youtube_user_id>
+    <search_for>EyesOnNigeria</search_for>
+    <cross_domain>http://gdata.youtube.com/crossdomain.xml</cross_domain>
+    <user_search_prefix>http://gdata.youtube.com/feeds/api/users/</user_search_prefix>
+    <user_search_suffix>/uploads</user_search_suffix>
+</config>
