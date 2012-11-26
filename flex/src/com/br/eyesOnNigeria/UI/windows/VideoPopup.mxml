@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" 
+			   xmlns:components="com.UI.components.*"
+			   xmlns:containers="com.br.eyesOnNigeria.UI.containers.*"
+			   controlBarVisible="false"
+			   title="{vo.title}" 
+			   activate="onInit()" deactivate="onClean()" 
+			   close="onClose(event)"
+			   skinClass="com.br.eyesOnNigeria.UI.skins.BlackTitleWindowSkin">
+	
+	<s:layout>
+		<s:HorizontalLayout paddingLeft="17" 
+							paddingRight="17" 
+							paddingTop="17" 
+							paddingBottom="17" 
+							gap="17"/>
+	</s:layout>
+	<containers:YouTubePlayer id="moviePlayer"
+							  videoURL="{this.video_url}"
+							  skinClass="com.br.eyesOnNigeria.UI.containers.YouTubePlayerSkin"/>
+	<s:Scroller height="{video_height}" verticalScrollPolicy="auto" horizontalScrollPolicy="off">
+		<s:Group width="100%">
+			<!--old width="{Math.max(200,video_width*2/3)}" -->
+			<s:Label text="{vo.description}" 
+					 width="200" 
+					 styleName="body"
+					 paddingRight="4"/>
+		</s:Group>
+	</s:Scroller>
+	<fx:Script>
+		<![CDATA[
+			import com.br.eyesOnNigeria.DF.AppController;
+			import com.br.eyesOnNigeria.DF.Data.YouTubeVideoVO;
+			import com.br.eyesOnNigeria.DF.events.AppEvent;
+			
+			import mx.collections.ArrayCollection;
+			import mx.core.FlexGlobals;
+			import mx.events.FlexMouseEvent;
+			import mx.managers.PopUpManager;
+			import mx.utils.ObjectUtil;
+			
+			[Bindable]
+			private var vo:YouTubeVideoVO = new YouTubeVideoVO();
+			
+			[Bindable]
+			private var is_open:Boolean = false;
+			
+			[Bindable]
+			private var video_url:String = "";
+			
+			[Bindable]
+			private var video_width:Number = 100;
+			
+			[Bindable]
+			private var video_height:Number = 100;
+			
+			//---------------------------------------------------------------------------------
+			private function onInit():void {
+				debug(".onInit()");
+				AppController.addEventListener(AppEvent.VIDEO_POPUP, onOpen);
+				this.addEventListener(FlexMouseEvent.MOUSE_DOWN_OUTSIDE, onClose);
+			}
+			private function onOpen(event:AppEvent):void 
+			{
+				debug(".onOpen()");
+				this.vo = event.data as YouTubeVideoVO;
+				this.setupVideo();
+				
+				if (!this.is_open) {
+					this.is_open = true;
+					AppController.addEventListener(AppEvent.CLOSE_POP_UP, onClose);
+					this.addEventListener(FlexMouseEvent.MOUSE_DOWN_OUTSIDE, onClose);
+					PopUpManager.addPopUp(this, FlexGlobals.topLevelApplication.parentDocument, true);
+					this.x = FlexGlobals.topLevelApplication.width / 2 - this.width / 2;
+					this.y = 40;
+				}
+			}
+			private function onClose(event:Event):void {
+				debug(".onClose()");
+				this.is_open = false;
+				AppController.removeEventListener(AppEvent.CLOSE_POP_UP, onClose);
+				this.removeEventListener(FlexMouseEvent.MOUSE_DOWN_OUTSIDE, onClose);
+				this.moviePlayer.pause();
+				PopUpManager.removePopUp(this);
+			}
+			private function onClean():void {
+				debug(".onClean()");
+				AppController.removeEventListener(AppEvent.VIDEO_POPUP, onOpen);
+			}
+			
+			//---------------------------------------------------------------------------------
+			private function setupVideo():void {
+				debug(".setupVideo() :: vo = " + ObjectUtil.toString(this.vo));
+				var bFound:Boolean = false;
+				if (!bFound) {
+					this.video_url = vo.video_url;
+					this.video_width = 640;
+					this.video_height = 380;
+				}
+			}
+			
+			//---------------------------------------------------------------------------------
+			private function debug(message:String):void {
+				//trace("VideoPopup" + message);
+			}
+		]]>
+	</fx:Script>
+</s:TitleWindow>

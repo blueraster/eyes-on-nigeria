@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Skin xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" 
+		xmlns:mx="library://ns.adobe.com/flex/mx">
+
+	<!-- host component -->
+	<fx:Metadata>
+		[HostComponent("spark.components.supportClasses.SliderBase")]
+	</fx:Metadata>
+	
+	<!-- states -->
+	<s:states>
+		<s:State name="up" />
+		<s:State name="over" />
+		<s:State name="down" />
+		<s:State name="disabled" />
+		<s:State name="normal" />
+	</s:states>
+	
+	<!-- SkinParts
+	name=dataTip, type=mx.core.IFactory, required=false
+	name=track, type=spark.components.Button, required=false
+	name=thumb, type=spark.components.Button, required=false
+	-->
+	
+	<!-- area -->
+	<s:Group>
+		<s:Path data="M 10 10 L 30 10 L 20 30 z">
+			<s:fill>
+				<s:SolidColor color="#a3bc57" alpha="0.01"/>
+			</s:fill>
+		</s:Path>
+	</s:Group>
+	
+	<!-- fill -->
+	<s:Group x="2" y="-2">
+		<!--s:Path data="M 10 10 L 30 10 L 20 30 z"-->
+		<!--s:Path data="M 15 15 L 25 15 L 20 25 z"-->
+		<s:Path data="M 13 13 L 23 13 L 18 23 z">
+			<s:fill>
+				<s:SolidColor color="#a3bc57" />
+			</s:fill>
+			<s:stroke>
+				<s:SolidColorStroke weight="3" color="#a3bc57" />
+			</s:stroke>
+		</s:Path>
+	</s:Group>
+
+	
+	<!-- highlight -->
+	<s:Group x="2" y="-2">
+		<s:Path data="M 13 13 L 23 13 L 18 23 z">
+		<s:fill>
+			<s:SolidColor color="#ffffff"
+						  alpha="0"
+						  alpha.over="0.83"
+						  alpha.down="0.33" />
+		</s:fill>
+		</s:Path>
+	</s:Group>
+
+	<!-- label -->
+</s:Skin>

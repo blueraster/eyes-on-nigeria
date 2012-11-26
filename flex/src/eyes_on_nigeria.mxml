@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   pageTitle="Eyes on Nigeria"
+			   styleName="plain" backgroundAlpha="0" color="#ffffff"
+			   initialize="init()">
+	
+	<fx:Style source="/../assets/css/main.css"/>
+	
+	<fx:Script>
+		<![CDATA[
+			import base.XMLLoader;
+			
+			import com.br.eyesOnNigeria.DF.AppController;
+			import com.br.eyesOnNigeria.DF.models.AppConfig;
+			import com.br.eyesOnNigeria.DF.models.FlickrData;
+			import com.br.eyesOnNigeria.DF.models.Themes;
+			import com.br.eyesOnNigeria.DF.models.YouTubeData;
+			import com.br.eyesOnNigeria.UI.Main;
+			import com.br.eyesOnNigeria.UI.windows.PhotoPopup;
+			import com.br.eyesOnNigeria.UI.windows.VideoPopup;
+			
+			import spark.components.Label;
+			
+			private const APP_CONFIG:String = "config/appconfig.xml";
+			private const THEME_CONFIG:String = "config/themes.xml";
+			private const FLICKR_CONFIG:String = "config/flickr.xml";
+			private const YOUTUBE_CONFIG:String = "config/youtube.xml";
+			
+			private var nLoadCount:int = 0;
+			
+			private function init():void {
+				var oLoader:XMLLoader = new XMLLoader();
+				oLoader.addEventListener(Event.COMPLETE, handleAppConfigLoaded);
+				oLoader.load(APP_CONFIG);
+				
+				oLoader = new XMLLoader();
+				oLoader.addEventListener(Event.COMPLETE, handleThemeConfigLoaded);
+				oLoader.load(THEME_CONFIG);
+				
+				oLoader = new XMLLoader();
+				oLoader.addEventListener(Event.COMPLETE, handleFlickrConfigLoaded);
+				oLoader.load(FLICKR_CONFIG);
+				
+				oLoader = new XMLLoader();
+				oLoader.addEventListener(Event.COMPLETE, handleYouTubeConfigLoaded);
+				oLoader.load(YOUTUBE_CONFIG);
+			}
+			
+			//App Config XML
+			private function handleAppConfigLoaded(event:Event):void {
+				var oLoader:XMLLoader = event.currentTarget as XMLLoader;
+				oLoader.removeEventListener(Event.COMPLETE, handleAppConfigLoaded);
+				if (!oLoader.failed) {
+					AppConfig.instance.parseXML(oLoader.xml);
+				}
+				this.nLoadCount++;
+				this.initController();
+			}
+			
+			//Themes XML
+			private function handleThemeConfigLoaded(event:Event):void {
+				var oLoader:XMLLoader = event.currentTarget as XMLLoader;
+				oLoader.removeEventListener(Event.COMPLETE, handleThemeConfigLoaded);
+				if (!oLoader.failed) {
+					Themes.instance.parseXML(oLoader.xml);
+				}
+				this.nLoadCount++;
+				this.initController();
+			}
+			
+			//Flickr XML
+			private function handleFlickrConfigLoaded(event:Event):void {
+				var oLoader:XMLLoader = event.currentTarget as XMLLoader;
+				oLoader.removeEventListener(Event.COMPLETE, handleFlickrConfigLoaded);
+				if (!oLoader.failed) {
+					FlickrData.instance.parseXML(oLoader.xml);
+				}
+				this.nLoadCount++;
+				this.initController();
+			}
+			
+			//YouTube XML
+			private function handleYouTubeConfigLoaded(event:Event):void {
+				var oLoader:XMLLoader = event.currentTarget as XMLLoader;
+				oLoader.removeEventListener(Event.COMPLETE, handleYouTubeConfigLoaded);
+				if (!oLoader.failed) {
+					YouTubeData.instance.parseXML(oLoader.xml);
+				}
+				this.nLoadCount++;
+				this.initController();
+			}
+			
+			//Finally Create UI
+			private function initController():void {
+				//trace(":: nLoadCount = " + this.nLoadCount);
+				if (this.nLoadCount >= 4) {
+					//trace(" :: initializing...");
+					AppController.init();
+					this.addElement(new Main());
+					this.createWindowInstances();
+				}
+			}
+			
+			//POP UP WINDOWS
+			private var oPhotoPopup:PhotoPopup;
+			private var oVideoPopup:VideoPopup;
+			private function createWindowInstances():void {
+				this.oPhotoPopup = new PhotoPopup();
+				this.oVideoPopup = new VideoPopup();
+			}
+		]]>
+	</fx:Script>
+	
+</s:Application>

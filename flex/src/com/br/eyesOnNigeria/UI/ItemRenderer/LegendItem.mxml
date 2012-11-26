@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:HGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		  xmlns:s="library://ns.adobe.com/flex/spark" 
+		  xmlns:mx="library://ns.adobe.com/flex/mx" verticalAlign="middle">
+
+
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<s:HGroup verticalAlign="middle" horizontalAlign="left">
+		<s:Group width="20" visible="{this.show_markers}">
+			<s:Group id="pnlShape2" horizontalCenter="0" />
+			<s:Group id="pnlShape" horizontalCenter="0" />
+			<mx:Image id="pnlImage" width="100%" horizontalAlign="center" 
+					  visible="false" includeInLayout="false" />
+		</s:Group>
+		<s:Label id="idLabel" text="{this.label}"  styleName="body" paddingTop="1" color="0xffffff"
+				 paddingBottom="-1"  />
+		<s:Label text="{this.show_markers ? '(Hide)':'(Show)'}"  
+				 visible="{(this.marker_type != AppConfig.instance.MARKER_TYPE_THEME)}"
+				 includeInLayout="{(this.marker_type != AppConfig.instance.MARKER_TYPE_THEME)}"
+				 textDecoration="underline" click="toggleShowMarkers(!this.show_markers)" />
+	</s:HGroup>
+			
+	<fx:Script>
+		<![CDATA[
+			import com.br.eyesOnNigeria.DF.Data.MarkerVO;
+			import com.br.eyesOnNigeria.DF.Data.ToolTipItem;
+			import com.br.eyesOnNigeria.DF.models.AppConfig;
+			import com.esri.ags.symbols.SimpleMarkerSymbol;
+			
+			import mx.formatters.NumberFormatter;
+			
+			import spark.primitives.Graphic;
+			
+			//TODO: Make properties private after MainUI is retired
+			
+			public var color:Number = 0;
+			public var size:Number = 0;
+			public var style:String = "";
+			
+			[Bindable]
+			private var shapeAlpha:Number = 1;
+
+			[Bindable]
+			public var outlinecolor:Number = 0;
+			[Bindable]
+			public var outlinesize:Number = 1;
+
+			[Bindable]
+			public var label:String = "";
+			
+			[Bindable]
+			public var marker_type:String = "theme";
+			[Bindable]
+			private var show_markers:Boolean = true;
+
+			public function setup(markerVO:MarkerVO):void {
+				this.color = markerVO.color;
+				this.outlinecolor = markerVO.outlinecolor;
+				this.outlinesize = markerVO.outlinesize;
+				this.size = markerVO.size;
+				this.alpha = 1;
+				this.shapeAlpha = markerVO.alpha;
+				this.horizontalAlign = "left";
+				if (markerVO.shape == "square") {
+					this.outlinecolor = 0xffffff;
+					this.outlinesize  = 1;
+				}
+				//this.width = 125;
+				//this.alpha = .8;
+				
+				if (markerVO.url.length > 0)
+					this.image = markerVO.url;
+				else
+					this.shape = markerVO.shape;
+				
+				if (markerVO.label != "")
+					this.label = markerVO.label;
+				else if (markerVO.value.toString().length > 0)
+					this.label = markerVO.fieldname;
+				else if (markerVO.fieldname == "")
+					this.label = "n/a";
+				else if (isNaN(markerVO.valuemin))
+					this.label = "Up to " + formatData(markerVO.valuemax, markerVO);
+				else if (isNaN(markerVO.valuemax))
+					this.label = formatData(markerVO.valuemin, markerVO) + " or more";
+				else
+					this.label = formatData(markerVO.valuemin, markerVO) + " to " + formatData(markerVO.valuemax, markerVO);
+				
+				if(this.marker_type != AppConfig.instance.MARKER_TYPE_THEME)
+					this.toggleShowMarkers(true);
+			}
+			
+			private function formatData(value:Number, oCountVO:MarkerVO):String {
+				var sResult:String = "";
+				var oFormatter:NumberFormatter = new NumberFormatter();
+				
+				if (isNaN(Number(value)) || oCountVO.format == "")
+					sResult = value.toString();
+				else {	
+					if (oCountVO.format == ToolTipItem.FORMAT_PERCENT) {
+						sResult = Number(value)  + " %";
+					}			
+					else
+						if (oCountVO.format == ToolTipItem.FORMAT_DOLLARS) {								
+							oFormatter.precision = oCountVO.precision;
+							sResult = "$" + oFormatter.format(Number(value));
+						}
+						else
+							if (oCountVO.format == ToolTipItem.FORMAT_NUMBER) {					
+								oFormatter.precision = oCountVO.precision;
+								sResult = oFormatter.format(Number(value));					
+							}
+							else 
+								sResult = value.toString();
+				}
+				
+				return sResult;
+			}
+			
+			private function toggleShowMarkers(visible:Boolean):void {
+				//trace(".toggleShowMarkers() -- this.marker_type=" + this.marker_type);
+				this.show_markers = visible;
+				AppConfig.instance["show_markers_" + this.marker_type] = this.show_markers;
+			}
+			
+			public function set image(value:String):void {
+//				this.pnlShape.width = this.size;
+				this.pnlShape.height = this.size;
+//				this.pnlShape.width = 0;
+				this.pnlShape.height = 0;
+				this.pnlShape.visible = false;
+				this.pnlShape.includeInLayout = false;
+				this.pnlImage.source = value;
+				this.pnlImage.height = this.size;
+//				this.pnlImage.width = this.size;
+				this.pnlImage.visible = true;
+				this.pnlImage.includeInLayout = true;
+			}
+			
+			public function set shape(value:String):void {
+				this.pnlShape.width = this.size;
+				this.pnlShape.height = this.size;
+				switch (value) {
+					case SimpleMarkerSymbol.STYLE_SQUARE:
+						if (this.outlinesize>0) 
+							this.pnlShape.graphics.lineStyle(this.outlinesize, this.outlinecolor);
+						this.pnlShape.graphics.beginFill(this.color, this.shapeAlpha);
+						this.pnlShape.graphics.moveTo(0,0);
+						this.pnlShape.graphics.lineTo(this.size,0);
+						this.pnlShape.graphics.lineTo(this.size,this.size);
+						this.pnlShape.graphics.lineTo(0,this.size);
+						this.pnlShape.graphics.lineTo(0,0);
+						this.pnlShape.graphics.endFill();
+						if (this.outlinesize>0) 
+							this.pnlShape2.graphics.lineStyle(this.outlinesize, this.outlinecolor);
+						this.pnlShape2.graphics.beginFill(0xf1eee7, 1);
+						this.pnlShape2.graphics.moveTo(0,0);
+						this.pnlShape2.graphics.lineTo(this.size,0);
+						this.pnlShape2.graphics.lineTo(this.size,this.size);
+						this.pnlShape2.graphics.lineTo(0,this.size);
+						this.pnlShape2.graphics.lineTo(0,0);
+						this.pnlShape2.graphics.endFill();
+						this.pnlShape2.width = this.size;
+						this.pnlShape2.height = this.size;
+						break;
+					case SimpleMarkerSymbol.STYLE_CROSS:
+						this.pnlShape.graphics.lineStyle(this.outlinesize, this.color);						
+						this.pnlShape.graphics.moveTo(this.size/2,0);
+						this.pnlShape.graphics.lineTo(this.size/2,this.size);
+						this.pnlShape.graphics.moveTo(0,this.size/2);
+						this.pnlShape.graphics.lineTo(this.size,this.size/2);						
+						break;
+					case SimpleMarkerSymbol.STYLE_DIAMOND:
+						if (this.outlinesize>0) 
+							this.pnlShape.graphics.lineStyle(this.outlinesize, this.outlinecolor);
+						this.pnlShape.graphics.beginFill(this.color);
+						this.pnlShape.graphics.moveTo(this.size/2,0);
+						this.pnlShape.graphics.lineTo(this.size,this.size/2);
+						this.pnlShape.graphics.lineTo(this.size/2,this.size);
+						this.pnlShape.graphics.lineTo(0,this.size/2);
+						this.pnlShape.graphics.lineTo(this.size/2,0);
+						this.pnlShape.graphics.endFill();						
+						break;
+					case SimpleMarkerSymbol.STYLE_TRIANGLE:
+						if (this.outlinesize>0) 
+							this.pnlShape.graphics.lineStyle(this.outlinesize, this.outlinecolor);
+						this.pnlShape.graphics.beginFill(this.color);
+						this.pnlShape.graphics.moveTo(0,this.size);
+						this.pnlShape.graphics.lineTo(this.size/2,0);
+						this.pnlShape.graphics.lineTo(this.size,this.size);
+						this.pnlShape.graphics.lineTo(0,this.size);						
+						this.pnlShape.graphics.endFill();						
+						break;
+					case SimpleMarkerSymbol.STYLE_X:
+						this.pnlShape.graphics.lineStyle(this.outlinesize, this.color);						
+						this.pnlShape.graphics.moveTo(0,0);
+						this.pnlShape.graphics.lineTo(this.size,this.size);
+						this.pnlShape.graphics.moveTo(this.size,0);
+						this.pnlShape.graphics.lineTo(0,this.size);						
+						break;
+					case SimpleMarkerSymbol.STYLE_CIRCLE:
+						if (this.outlinesize>0) 
+							this.pnlShape.graphics.lineStyle(this.outlinesize, this.outlinecolor);
+						this.pnlShape.graphics.beginFill(this.color);
+						this.pnlShape.graphics.drawCircle(this.size/2,this.size/2,this.size/2);												
+						this.pnlShape.graphics.endFill();						
+						break;					
+				}				
+			}
+
+		
+]]>
+	</fx:Script>
+</s:HGroup>

@@ -1,0 +1,9 @@
+<config>
+	<initial_extent xmin="298552" ymin="476376" xmax="1634012" ymax="1561758"/>
+	<base_mapserver_url>http://23.21.120.129/arcgis/rest/services/EONigeria/</base_mapserver_url>
+	<topo_url>http://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer</topo_url>
+	<ve_access_key></ve_access_key>
+	<ve_map_style>aerial</ve_map_style>
+	<introHeading>See for yourself.</introHeading>
+	<introText>Explore the satellite evidence and read detailed accounts of each destroyed village or human rights violation to see with your your own eyes what is happening in Nigeria.</introText>
+</config>

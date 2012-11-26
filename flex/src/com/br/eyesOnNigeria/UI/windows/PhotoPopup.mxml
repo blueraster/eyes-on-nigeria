@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" 
+			   xmlns:components="com.UI.components.*"   
+			   controlBarVisible="false"
+			   title="{vo.title}"
+			   activate="onInit()" 
+			   deactivate="onClean()" 
+			   close="onClose(event)"
+			   show="onShow()"
+			   skinClass="com.br.eyesOnNigeria.UI.skins.BlackTitleWindowSkin">
+	
+	<s:layout>
+		<s:VerticalLayout paddingLeft="5" 
+						  paddingRight="5" 
+						  paddingTop="5" 
+						  paddingBottom="5"
+						  horizontalAlign="center"
+						  gap="5"/>
+	</s:layout>
+	<s:BorderContainer id="imageGroup" width="{scroller.width}" height="100%" borderVisible="false" backgroundAlpha="0">
+		<mx:Image id="mainImage"
+				  source="{image_url}" 
+				  height="{image_height}"
+				  width="{image_width}"
+				  x="{imageGroup.width / 2 - mainImage.width / 2}"
+				  y="{imageGroup.height / 2 - mainImage.height / 2}"
+				  maintainAspectRatio="true" 
+				  scaleContent="true"
+				  visible="{image_url != ''}" 
+				  includeInLayout="{image_url != ''}"
+				  loaderContext="{myLoaderContext}"
+				  complete="onImageComplete(event)"/>
+	</s:BorderContainer>
+	<s:Scroller id="scroller" height="60" width="100%" verticalScrollPolicy="auto" horizontalScrollPolicy="off">
+		<s:Group width="100%">
+			<s:RichEditableText id="mainDescription"
+								paddingRight="4"
+								selectable="false"
+								editable="false"
+								textFlow="{TextConverter.importToFlow(vo._content, TextConverter.TEXT_FIELD_HTML_FORMAT, textConfig)}"
+								styleName="body"
+								width="100%" />
+		</s:Group>
+	</s:Scroller>
+	
+	<fx:Script>
+		<![CDATA[
+			import com.br.eyesOnNigeria.DF.AppController;
+			import com.br.eyesOnNigeria.DF.Data.FlickrPhotoVO;
+			import com.br.eyesOnNigeria.DF.events.AppEvent;
+			
+			import flash.utils.flash_proxy;
+			
+			import flashx.textLayout.conversion.TextConverter;
+			import flashx.textLayout.elements.Configuration;
+			import flashx.textLayout.elements.TextFlow;
+			import flashx.textLayout.formats.TextDecoration;
+			import flashx.textLayout.formats.TextLayoutFormat;
+			
+			import mx.collections.ArrayCollection;
+			import mx.core.FlexGlobals;
+			import mx.events.FlexEvent;
+			import mx.events.FlexMouseEvent;
+			import mx.managers.PopUpManager;
+			import mx.utils.ObjectUtil;
+			
+			[Bindable] private var vo:FlickrPhotoVO = new FlickrPhotoVO();
+			[Bindable] private var is_open:Boolean = false;
+			[Bindable] private var image_url:String = '';
+			[Bindable] private var image_height:Number = 1;
+			[Bindable] private var image_width:Number = 1;
+			[Bindable] private var photo_layout:String = '';
+			
+			private var max_side:int = 100;
+			private var max_side_layout:String = '';
+			private var photo_container_height:int = 0;
+			private var photo_container_width:int = 0;
+			[Bindable] private var textConfig:Configuration;
+			
+			//---------------------------------------------------------------------------------
+			private function onInit():void {
+				debug(".onInit()");
+				AppController.addEventListener(AppEvent.PHOTO_POPUP, onOpen);
+				this.addEventListener(FlexMouseEvent.MOUSE_DOWN_OUTSIDE, onClose);
+				
+				textConfig = TextFlow.defaultConfiguration;
+				var normalFmt:TextLayoutFormat = new TextLayoutFormat(textConfig.defaultLinkNormalFormat);
+				normalFmt.color = 0xFFE600;
+				normalFmt.textDecoration = TextDecoration.NONE;
+				textConfig.defaultLinkNormalFormat = normalFmt;
+			}
+			
+			private function onOpen(event:AppEvent):void {
+				debug(".onOpen()");
+				this.vo = event.data as FlickrPhotoVO;
+				
+				this.height = (FlexGlobals.topLevelApplication.height * .9) - 186;
+				this.width = FlexGlobals.topLevelApplication.height * .9;
+				
+				this.photo_layout = (this.vo.height_o >= this.vo.width_o) ? 'portrait' : 'landscape';
+				
+				this.photo_container_height = this.height - 60 - 30 - 10 - 10;
+				this.photo_container_width = this.width - 10;
+			
+				this.max_side = (this.photo_container_height <= this.photo_container_width) ? this.photo_container_height : this.photo_container_width;
+				this.max_side_layout = (this.photo_container_height <= this.photo_container_width) ? 'height' : 'width';
+					
+				this.setImageSource();
+				
+				if (!this.is_open) {
+					this.is_open = true;
+					AppController.addEventListener(AppEvent.CLOSE_POP_UP, onClose);
+					this.addEventListener(FlexMouseEvent.MOUSE_DOWN_OUTSIDE, onClose);
+					PopUpManager.addPopUp(this, FlexGlobals.topLevelApplication.parentDocument, true);
+					this.x = FlexGlobals.topLevelApplication.width / 2 - this.width / 2;
+					this.y = 40;
+				}
+			}
+			
+			private function onShow():void
+			{
+				
+			}
+			
+			private function setImageSource():void 
+			{
+				const SIZE:String = this.getFlickrSize(this.max_side, this.vo, this.photo_layout);
+				const VO_HEIGHT:int = this.vo['height_' + SIZE];
+				const VO_WIDTH:int = this.vo['width_' + SIZE];
+				const URL:String = this.vo['url_' + SIZE];
+				
+				this.image_url = URL;
+				switch(this.max_side_layout)
+				{
+					case 'height':
+						this.image_height = (this.max_side < VO_HEIGHT) ? this.max_side : VO_HEIGHT;
+						this.image_width = Math.floor((this.image_height / VO_HEIGHT) * VO_WIDTH);
+						break;
+					case 'width':
+						this.image_width = (this.max_side < VO_WIDTH) ? this.max_side : VO_WIDTH;
+						this.image_height = Math.floor((this.image_width / VO_WIDTH) * VO_HEIGHT);
+						break;
+					default:
+						throw new Error('Photo Layout not set');
+						break;
+				}
+				
+				this.debug(this.image_url);
+			}
+			
+			private function getFlickrSize(largestSide:int, vo:FlickrPhotoVO, photoLayout:String):String
+			{
+				const SIDE:String = (photoLayout == 'portrait') ? 'height_' : 'width_';
+				
+				if(largestSide > 640 && vo.url_o != 'not set' && vo[SIDE + 'o'] > 640) {
+					return 'o';
+				}
+				
+				else if(largestSide > 500 && vo.url_z != 'not set') {
+					return 'z';
+				}
+					
+				else if(largestSide > 240  && vo.url_m != 'not set') {
+					return 'm';
+				}
+					
+				else {
+					return 's';
+				}
+			}
+			
+			private function onImageComplete(event:Event):void
+			{
+				var myBitmap:Bitmap = ((event.target as Image).content as Bitmap);
+				if (myBitmap != null) {myBitmap.smoothing = true;}
+				
+				event.target.x = this.imageGroup.width / 2 - this.image_width / 2;
+				event.target.y = this.imageGroup.height / 2 - this.image_height / 2;
+				
+				this.invalidateProperties();
+				this.invalidateDisplayList();
+			}
+			
+			private function get myLoaderContext():LoaderContext 
+			{
+				var loaderContext:LoaderContext = new LoaderContext();
+				loaderContext.checkPolicyFile = true;
+				return loaderContext;
+			}
+			
+			private function onClose(event:* = null):void {
+				debug(".onClose()");
+				this.is_open = false;
+				AppController.removeEventListener(AppEvent.CLOSE_POP_UP, onClose);
+				this.removeEventListener(FlexMouseEvent.MOUSE_DOWN_OUTSIDE, onClose);
+				PopUpManager.removePopUp(this);
+			}
+			private function onClean():void {
+				debug(".onClean()");
+				AppController.removeEventListener(AppEvent.PHOTO_POPUP, onOpen);
+			}
+			
+			
+			
+			//---------------------------------------------------------------------------------
+			//Carolyn's Photo Logic
+			/* private function setupImage():void {
+		
+				var sURL:String;
+				var w:Number;
+				var h:Number;
+				
+				var bFound:Boolean = false;
+				const aSizeList:Array = ["_o","_z","_m","_s","_t","_sq"];
+				for each (var size:String in aSizeList) {
+					sURL = this.vo["url"+size];
+					w = this.vo["width"+size];
+					h = this.vo["height"+size];
+					if (sURL != "not set" && w * 2/3 < FlexGlobals.topLevelApplication.width-50 && h < FlexGlobals.topLevelApplication.height - 50) {
+						this.image_url = sURL;
+						this.image_width = w;
+						this.image_height = h;
+						bFound = true;
+						break;
+					}
+				}
+				if (!bFound) {
+					this.image_url = "";
+					this.image_width = 600;
+					this.image_height = 300;
+				}
+			} */
+			
+			//---------------------------------------------------------------------------------
+			private function debug(message:String):void {
+				//trace("PhotoPopup" + message);
+			}
+
+		]]>
+	</fx:Script>
+</s:TitleWindow>

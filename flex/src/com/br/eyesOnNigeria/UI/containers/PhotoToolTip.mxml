@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 maxHeight="{parentApplication.height}"
+		 maxWidth="{parentApplication.width}"
+		 implements="mx.core.IToolTip">
+	<s:Rect>
+		<s:fill>
+			<s:SolidColor color="0x000000" />
+		</s:fill>
+	</s:Rect>
+	<mx:Image id="mainImg" 
+			  source="{this.source}"
+			  width="100%"
+			  height="100%"
+			  complete="onPhotoComplete(event)"
+			  maintainAspectRatio="true"
+			  loaderContext="{photoLoaderContext}"/>
+	<fx:Script>
+		<![CDATA[
+			[Bindable] public var source:String = '';
+			
+			protected function onPhotoComplete(event:Event):void
+			{
+				try 
+				{
+					var myBitmap:Bitmap = ((event.target as Image).content as Bitmap);
+					if (myBitmap != null) {myBitmap.smoothing = true;}
+					this.invalidateProperties();
+				} 
+				
+				catch(e:SecurityError)
+				{
+					trace(e.message);
+				}
+			}
+			
+			protected function get photoLoaderContext():LoaderContext 
+			{
+				var loaderContext:LoaderContext = new LoaderContext();
+				loaderContext.checkPolicyFile = true;
+				return loaderContext;
+			}
+			
+			//Implementation of IToolTip
+			private var _text:String = '';
+			public function set text(value:String):void
+			{
+				if (_text != value)
+				{
+					_text = value;
+				}
+			}
+			
+			public function get text():String
+			{
+				return _text;
+			}
+		]]>
+	</fx:Script>
+</s:Group>

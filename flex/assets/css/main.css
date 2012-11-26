@@ -1,0 +1,81 @@
+/* CSS file */
+@namespace s "library://ns.adobe.com/flex/spark";
+@namespace mx "library://ns.adobe.com/flex/mx";
+
+global {
+	modal-transparency-color:#000000;
+	modal-transparency: .8;
+	modal-transparency-blur: 3;
+}
+
+s|Label {
+	font-family: Arial,_sans;
+}
+
+s|List {
+	color: #fcffff;
+	roll-over-color: #536c07;
+	selection-color: #a3bc57;
+}
+
+mx|Alert {
+	color: #000000;
+	font-size: 13;
+	background-color: #a3bc57;
+	border-color: #fcffff;
+	border-alpha: 1;
+	border-visible: true;
+}
+
+s|TitleWindow {
+	color: #a3bc57;
+	font-size: 13;
+	background-color: #000000;
+	content-background-color: #000000;
+	content-background-alpha: 1;
+	border-color: #fcffff;
+	border-alpha: 1;
+	border-visible: true;
+}
+
+/* ==================== */
+.title {
+	color: #a3bc57;
+	font-weight: normal;
+	font-size: 24;
+}
+.mediumtitle {
+	color: #a3bc57;
+	font-weight: normal;
+	font-size: 20;
+}
+.smalltitle {
+	color: #a3bc57;
+	font-weight: normal;
+	font-size: 16;
+}
+.heading {
+	color: #a3bc57;
+	font-size: 13;
+}
+.body {
+	color: #fcffff;
+	line-height: 20;
+	font-size: 12;
+}
+.statLabel {
+	color: #fcffff;
+	font-size: 12;
+}
+.statValue {
+	color: #a3bc57;
+	font-size: 12;
+}
+.timeSlider {
+	color: #a3bc57;
+	label-offset:36;
+}
+.timeButton {
+	font-size: 9;
+	color: #000000;
+}

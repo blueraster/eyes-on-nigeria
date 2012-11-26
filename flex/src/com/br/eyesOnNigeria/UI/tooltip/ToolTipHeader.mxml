@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:BorderContainer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				   xmlns:s="library://ns.adobe.com/flex/spark" 
+				   xmlns:mx="library://ns.adobe.com/flex/mx" 
+				   width="100%" minHeight="26" 
+				   borderVisible="false" borderWeight="0" 
+				   backgroundAlpha="0">
+	<s:layout>
+		<s:BasicLayout/>
+	</s:layout>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<s:Rect width="100%" height="50%" topLeftRadiusX="7" topLeftRadiusY="7" topRightRadiusX="7" topRightRadiusY="7">
+		<s:fill>
+			<s:LinearGradient>
+				<s:GradientEntry color="0xf6e5be" ratio="0"/>
+				<s:GradientEntry color="0xf9efd8" ratio="1"/>
+			</s:LinearGradient>
+		</s:fill>
+	</s:Rect>
+	<s:Rect width="100%" height="50%" bottom="0">
+		<s:fill>
+			<s:SolidColor color="0xf6e0b2"/>
+		</s:fill>
+	</s:Rect>
+	<!--<mx:Canvas id="pnlTop" width="100%" height="50%">
+		<components:GradientBox width="100%" height="{pnlTop.height + 5}" colors="{[0xf6e5be, 0xf9efd8]}" gradientDirection="horizontal" cornerRadius="7" 
+								borderColor="0xf7dba5"/>
+	</mx:Canvas>	
+	<components:GradientBox width="100%" height="50%" colors="{[0xf6e0b2, 0xf7dba5]}" bottom="0"/>
+	-->
+	
+	<s:Label width="100%" minHeight="26" text="{this.text}" verticalAlign="middle" fontWeight="bold" paddingLeft="10" paddingRight="10" paddingTop="3" paddingBottom="3"/>
+	
+	<s:VGroup width="100%" gap="0" bottom="0">
+		<mx:Canvas width="100%" height="1" backgroundColor="0xaeaeae"/>
+		<mx:Canvas width="100%" height="1" backgroundColor="0xf3f3f3"/>
+	</s:VGroup>
+	
+	<fx:Script>
+		<![CDATA[
+			[Bindable]
+			public var text:String = "";
+		]]>
+	</fx:Script>
+</s:BorderContainer>

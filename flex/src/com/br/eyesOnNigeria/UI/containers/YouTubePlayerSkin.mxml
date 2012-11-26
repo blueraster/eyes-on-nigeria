@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Skin xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" 
+    	xmlns:fb="http://ns.adobe.com/flashbuilder/2009"
+		xmlns:mx="library://ns.adobe.com/flex/mx"
+		width="{FlexGlobals.topLevelApplication.width-275>640?640:FlexGlobals.topLevelApplication.width-275}"
+		height="{FlexGlobals.topLevelApplication.height-100>360?360:FlexGlobals.topLevelApplication.height-100}"
+		alpha.disabled="0.5">
+    <fx:Metadata>[HostComponent("com.br.eyesOnNigeria.UI.containers.YouTubePlayer")]</fx:Metadata>
+	<s:states>
+		<s:State name="complete" />
+		<s:State name="loading" />
+		<s:State name="normal" />
+		<s:State name="disabled" />
+		<s:State name="playing" />
+		<s:State name="paused" />
+	</s:states>
+	<s:Group id="contentGroup"
+			 clipAndEnableScrolling="true" 
+			 visible.loading="false" 
+			 visible.complete="true" 
+			 width="{FlexGlobals.topLevelApplication.width-275}"
+			 height="{FlexGlobals.topLevelApplication.height-100}"/>
+	<s:Group y="{this.height - 50}" width="{this.width}" height="60">
+		<s:Rect width="540" height="50" bottom="0">
+			<s:fill>
+				<s:LinearGradient>
+					<s:GradientEntry color="0x000000" ratio=".15" alpha="1"/>
+					<s:GradientEntry color="0x000000" ratio=".85" alpha=".0"/>
+				</s:LinearGradient>
+			</s:fill>
+		</s:Rect>
+		<s:HGroup id="buttonGroup"
+				  horizontalAlign="left" 
+				  verticalAlign="middle"
+				  paddingRight="15"
+				  paddingLeft="15"
+				  width="{this.contentGroup.width}">
+			<mx:Image id="rewindButton"
+					  source="@Embed('assets/image/controlsRewind.png')"
+					  toolTip="Rewind"
+					  rollOver="onRollOver(event)"
+					  rollOut="onRollOut(event)" />
+			<s:Group id="playButtonGroup" height="60" width="60">
+				<s:Ellipse height="{playButtonGroup.height}" width="{playButtonGroup.width}">
+					<s:fill>
+						<s:SolidColor color="0x000000" />
+					</s:fill>
+				</s:Ellipse>
+				<mx:Image id="pauseButton"
+						  excludeFrom="paused"
+						  x="{playButtonGroup.width/2 - pauseButton.width/2}"
+						  y="{buttonGroup.height/2 - pauseButton.height/2}"
+						  smoothBitmapContent="true"
+						  source="@Embed('assets/image/controlsPause.png')"
+						  toolTip="Pause"
+						  rollOver="onRollOver(event)"
+						  rollOut="onRollOut(event)" />
+				<mx:Image id="playButton"
+						  excludeFrom="playing"
+						  x="{playButtonGroup.width/2 - playButton.width/2}"
+						  y="{buttonGroup.height/2 - playButton.height/2}"
+						  smoothBitmapContent="true"
+						  source="@Embed('assets/image/controlsPlay.png')"
+						  toolTip="Play"
+						  rollOver="onRollOver(event)"
+						  rollOut="onRollOut(event)" />
+			</s:Group>
+			<mx:Image id="stopButton"
+					  source="@Embed('assets/image/controlsStop.png')"
+					  toolTip="Stop"
+					  rollOver="onRollOver(event)"
+					  rollOut="onRollOut(event)" />
+			<mx:Image id="forwardButton"
+					  source="@Embed('assets/image/controlsForward.png')"
+					  toolTip="Fast-Forward"
+					  rollOver="onRollOver(event)"
+					  rollOut="onRollOut(event)" />
+			<mx:Spacer width="100%" />
+			<!--<mx:Image id="expandCollapseButton"
+					  source="@Embed('assets/image/videoExpand.png')"
+					  toolTip="Expand"
+					  rollOver="onRollOver(event)"
+					  rollOut="onRollOut(event)" />-->
+		</s:HGroup>
+	</s:Group>
+	<!--Added an extra 5 pixels to account for larger play button-->
+	<s:Rect id="border" width="{this.width}" height="{this.height + 5}">
+		<s:stroke>
+			<s:SolidColorStroke color="0xaaaaaa" />
+		</s:stroke>
+	</s:Rect>
+	<fx:Script>
+		<![CDATA[
+			import mx.core.FlexGlobals;
+			
+			import spark.filters.GlowFilter;
+			
+			private var glow:GlowFilter = new GlowFilter(0xa3bc57,.9,6,6,5,1,false,false);
+			private function onRollOver(event:MouseEvent):void
+			{
+				event.target.filters = [glow];
+			}
+			
+			private function onRollOut(event:MouseEvent):void
+			{
+				event.target.filters = [];
+			}
+		]]>
+	</fx:Script>
+</s:Skin>

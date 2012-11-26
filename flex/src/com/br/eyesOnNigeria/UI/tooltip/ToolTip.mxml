@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:BorderContainer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				   xmlns:s="library://ns.adobe.com/flex/spark" 
+				   xmlns:mx="library://ns.adobe.com/flex/mx" 
+				   minHeight="0" 
+				   cornerRadius="7" 
+				   backgroundAlpha="0.9" 
+				   backgroundColor="0x000000" 
+				   borderStyle="solid" 
+				   borderWeight="1" 
+				   width="{Math.max(300,pnlTopBar.width)}">
+	
+	<fx:Declarations>	
+		<mx:Glow id="glowEffectOver" color="0x299aee" alphaFrom="0" alphaTo="1" blurXFrom="0" blurXTo="6" blurYFrom="0" blurYTo="6" duration="200"/>
+		<mx:Glow id="glowEffectOut" color="0x299aee" alphaFrom="1" alphaTo="0" blurXFrom="6" blurXTo="0" blurYFrom="6" blurYTo="0" duration="200"/>		
+	</fx:Declarations>
+	
+	<s:layout>
+		<s:VerticalLayout gap="0" paddingBottom="0"/>
+	</s:layout>
+	
+	<s:Group id="pnlTopBar" width="100%" height="28" visible="{this.bLock || this.bHasHeader}" includeInLayout="{this.bLock || this.bHasHeader}">
+		<s:BorderContainer id="pnlTopBarMask" width="100%" height="{pnlTopBar.height+7}" minHeight="0"
+						   cornerRadius="7"
+						   backgroundColor="0x000000" 
+						   borderStyle="solid" 
+						   borderWeight="1" 
+						   visible="{this.bHasHeader}"/>
+		<s:HGroup width="100%" horizontalAlign="right" height="23" paddingRight="5" verticalAlign="middle" 
+				  visible="{this.bLock}">
+			<mx:Image source="@Embed(source='/../assets/image/close_button.png')" 					  
+					  rollOverEffect="glowEffectOver" rollOutEffect="glowEffectOut" 
+					  click="{this.dispatchEvent(new CloseEvent(CloseEvent.CLOSE))}"/>		
+		</s:HGroup>
+	</s:Group>
+	
+	<s:BorderContainer id="pnlHolder" backgroundAlpha="0" borderVisible="false" borderWeight="0" width="100%" 
+					   minWidth="0" minHeight="0">
+		<s:layout>
+			<s:VerticalLayout paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="{this.nPaddingTop}" gap="3" horizontalAlign="center"/>
+		</s:layout>
+	</s:BorderContainer>
+	
+	<fx:Script>
+		<![CDATA[
+			import com.br.eyesOnNigeria.DF.Data.ToolTipItem;
+			import com.br.eyesOnNigeria.UI.containers.TitleBox;
+			
+			import mx.controls.Spacer;
+			import mx.events.CloseEvent;
+			import mx.formatters.NumberFormatter;
+			
+			import spark.components.RichText;
+			public static const POSITION_TOP_LEFT:String = "topLeft";
+			public static const POSITION_TOP_RIGHT:String = "topRight";
+			public static const POSITION_BOTTOM_LEFT:String = "bottomLeft";
+			public static const POSITION_BOTTOM_RIGHT:String = "bottomRight";
+			
+			
+			import com.br.eyesOnNigeria.DF.Data.ToolTipItem;
+			
+			import mx.collections.ArrayCollection;
+			import mx.controls.HRule;
+			import mx.controls.Text;
+			
+			import spark.components.HGroup;
+			import spark.components.Label;
+			
+			private var oData:Object;
+			private var acConfig:ArrayCollection;
+			
+			[Bindable]
+			private var bLock:Boolean = false;
+			
+			[Bindable]
+			private var bHasHeader:Boolean = false;
+			
+			[Bindable]
+			private var nPaddingTop:Number = 10;
+			
+			public function set data(value:Object):void {
+				this.oData = value;
+				this.invalidateProperties();
+			}
+			public function set config(value:ArrayCollection):void {
+				this.acConfig = value;
+				this.invalidateProperties();
+			}
+			
+			[Bindable]
+			public function get lock():Boolean {
+				return this.bLock;
+			}
+			public function set lock(value:Boolean):void {
+				this.bLock = value;
+				this.invalidateProperties();
+			}
+			
+			override protected function commitProperties():void {
+				super.commitProperties();
+				this.update();
+			}
+			
+			private function update():void {
+				var iImage:Image;
+				if (this.oData && this.acConfig) {
+					var oLabel:Label;
+					var oHGroup:HGroup;
+					var oText:RichText;
+					
+					this.pnlHolder.removeAllElements();
+					if (this.pnlTopBar.getElementAt(0) is TitleBox) {
+						this.pnlTopBar.removeElementAt(0);
+					}
+					
+					this.nPaddingTop = this.bLock ? 23 : 10;
+					this.bHasHeader = false;
+						
+					for (var i:Number = 0; i < this.acConfig.length; ++i) {
+						var oToolTipItem:ToolTipItem = this.acConfig[i] as ToolTipItem;
+						if ((i+1) < this.acConfig.length)
+							var oNextToolTipItem:ToolTipItem = this.acConfig[i+1] as ToolTipItem;
+						switch(oToolTipItem.type) {
+							case ToolTipItem.TYPE_TITLE:		
+								this.nPaddingTop = 6;
+								this.bHasHeader = true;
+								
+								var oToolTipHeader:TitleBox = new TitleBox();																
+								oToolTipHeader.percentHeight = 100;
+								oToolTipHeader.percentWidth = 100;								
+								oToolTipHeader.title = this.oData[oToolTipItem.fieldname];								
+								oToolTipHeader.small_text = true;
+								oToolTipHeader.alpha = 0.9;
+								oToolTipHeader.mask = pnlTopBarMask;
+								this.pnlTopBar.addElementAt(oToolTipHeader,0);
+								
+								var oSpacer:Spacer = new Spacer();
+								oSpacer.height = 2;
+								this.pnlHolder.addElement(oSpacer);
+								
+								break;					
+							case ToolTipItem.TYPE_GROUP:							
+								oText = new RichText();		
+								oText.percentWidth = 100;								
+								oText.setStyle("paddingLeft", "7");
+								oText.setStyle("paddingRight", "10");								
+								oText.setStyle("fontWeight", "bold");
+								//oText.setStyle("fontSize", "11");
+								oText.text = this.oData[oToolTipItem.fieldname];
+								
+								this.pnlHolder.addElement(oText);
+								break;
+							case ToolTipItem.TYPE_IMAGE:
+								oHGroup = new HGroup();
+								oHGroup.setStyle("paddingLeft", "10");
+								oHGroup.setStyle("paddingRight", "10");
+								oHGroup.minHeight = 0;								
+								oHGroup.paddingTop = 0;
+								oHGroup.paddingBottom = 0;
+								oHGroup.percentWidth = 100;
+								iImage = new Image();
+								iImage.source = this.oData[oToolTipItem.fieldname];
+								oHGroup.horizontalAlign = "center";
+								oHGroup.addElement(iImage);
+								this.pnlHolder.addElement(oHGroup);
+								break;
+							case ToolTipItem.TYPE_LABEL_VALUE_PAIR:
+								oHGroup = new HGroup();
+								oHGroup.setStyle("paddingLeft", "10");
+								oHGroup.setStyle("paddingRight", "10");
+								oHGroup.minHeight = 0;								
+								oHGroup.paddingTop = 0;
+								oHGroup.paddingBottom = 0;
+								oHGroup.percentWidth = 100;
+								oText = new RichText();	
+								oText.setStyle("paddingLeft", "10");
+								oText.setStyle("paddingRight", "10");
+								//oText.setStyle("fontSize", "11");								
+								oText.text = oToolTipItem.label;
+								oHGroup.addElement(oText);
+								
+								if (oToolTipItem.format == "image") {
+									iImage = new Image();
+									iImage.percentWidth = 100;		
+									iImage.setStyle("horizontalAlign", "right");
+									oText.setStyle("right", "10");
+									iImage.source = this.oData[oToolTipItem.fieldname];
+									oHGroup.addElement(iImage);
+								}
+								else {
+									oText = new RichText();
+									oText.setStyle("paddingLeft", "10");
+									oText.setStyle("paddingRight", "10");
+									oText.setStyle("textAlign", "right");
+									//oText.setStyle("fontSize", "11");
+									oText.percentWidth = 100;		
+									oText.text = formatData(this.oData[oToolTipItem.fieldname], oToolTipItem);
+									oHGroup.addElement(oText);
+								}
+								
+								this.pnlHolder.addElement(oHGroup);
+								break;
+							case ToolTipItem.TYPE_LONG_TEXT:
+								oHGroup = new HGroup();
+								oHGroup.setStyle("paddingLeft", "10");
+								oHGroup.setStyle("paddingRight", "10");
+								oHGroup.minHeight = 0;								
+								oHGroup.paddingTop = 0;
+								oHGroup.paddingBottom = 0;
+								oHGroup.percentWidth = 100;
+								oText = new RichText();
+								//oText.setStyle("fontSize", "11");
+								oText.percentWidth = 200;	
+								oText.maxDisplayedLines = 10;
+								oText.text = this.oData[oToolTipItem.fieldname];
+								if (oNextToolTipItem.type == ToolTipItem.TYPE_IMAGE) {
+									iImage = new Image();
+									iImage.percentWidth = 100;		
+									iImage.setStyle("horizontalAlign", "left");
+									oText.setStyle("left", "10");
+									iImage.source = this.oData[oNextToolTipItem.fieldname];
+									oHGroup.addElement(iImage);
+									i=i+1;
+								}
+								oHGroup.addElement(oText);
+								
+								this.pnlHolder.addElement(oHGroup);
+								break;
+							case ToolTipItem.TYPE_URL:
+								var oToolTipURLItem:ToolTipURLItem = new ToolTipURLItem();								
+								oToolTipURLItem.percentWidth = 100;
+								oToolTipURLItem.text = this.oData[oToolTipItem.fieldname];	
+						
+								this.pnlHolder.addElement(oToolTipURLItem);															
+								break;
+							case ToolTipItem.TYPE_EMAIL:
+								var oToolTipEmailItem:ToolTipEmailItem = new ToolTipEmailItem();
+								oToolTipEmailItem.percentWidth = 100;
+								oToolTipEmailItem.text = this.oData[oToolTipItem.fieldname];																
+								this.pnlHolder.addElement(oToolTipEmailItem);
+								break;
+							case ToolTipItem.TYPE_DIVIDER:
+								var oToolTipDivider:ToolTipDivider = new com.br.eyesOnNigeria.UI.tooltip.ToolTipDivider();
+								oToolTipDivider.percentWidth = 90;		
+								
+								this.pnlHolder.addElement(oToolTipDivider);
+								break;
+							default:								
+								break;
+						}
+					}
+				}								
+			}
+			
+			private function formatData(value:String, toolTipItem:ToolTipItem):String {
+				var sResult:String = "";
+				var oFormatter:NumberFormatter = new NumberFormatter();
+				if (isNaN(Number(value)) || toolTipItem.format == "")
+					sResult = value;
+				else {	
+					if (toolTipItem.format == ToolTipItem.FORMAT_PERCENT) {
+						sResult = Number(value) * toolTipItem.multiplier + " %";
+					}			
+					else
+					if (toolTipItem.format == ToolTipItem.FORMAT_DOLLARS) {								
+						oFormatter.precision = toolTipItem.precision;
+						sResult = "$ " + oFormatter.format(Number(value) * toolTipItem.multiplier);
+					}
+					else
+					if (toolTipItem.format == ToolTipItem.FORMAT_NUMBER) {					
+						oFormatter.precision = toolTipItem.precision;
+						sResult = oFormatter.format(Number(value) * toolTipItem.multiplier);					
+					}
+					else 
+						sResult = value;
+				}
+
+				return sResult;
+			}
+		]]>
+	</fx:Script>
+</s:BorderContainer>

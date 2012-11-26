@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 initialize="init()"
+		 mouseChildren="{this.pnlToolTip.lock}" mouseEnabled="{this.pnlToolTip.lock}"
+		 xmlns:UI="com.br.eyesOnNigeria.UI.*" xmlns:tooltip="com.br.eyesOnNigeria.UI.tooltip.*">
+	
+	<tooltip:ToolTip id="pnlToolTip" visible="false"/>
+	
+	<fx:Script>
+		<![CDATA[
+			import com.br.eyesOnNigeria.DF.events.ToolTipEvent;
+			import com.br.eyesOnNigeria.DF.models.GlobalSharedObject;
+			
+			import mx.events.CloseEvent;
+			
+			public var GLOBAL_OBJECT:GlobalSharedObject;
+			
+			private function init():void {
+				GLOBAL_OBJECT.addEventListener(ToolTipEvent.SHOW_TOOLTIP, handleShowToolTip);
+				GLOBAL_OBJECT.addEventListener(ToolTipEvent.HIDE_TOOLTIP, handleHideToolTip);
+				GLOBAL_OBJECT.addEventListener(ToolTipEvent.LOCK_TOOLTIP, handleLockToolTip);
+				GLOBAL_OBJECT.addEventListener(ToolTipEvent.UNLOCK_TOOLTIP, handleUnlockToolTip);
+				this.pnlToolTip.addEventListener(CloseEvent.CLOSE, handleToolTipClose);
+				this.pnlToolTip.addEventListener(MouseEvent.ROLL_OUT, handleRollOut);
+			}
+			
+			private function handleShowToolTip(event:ToolTipEvent):void {			
+				switch (event.position) {
+					case ToolTip.POSITION_TOP_LEFT:
+						this.pnlToolTip.right = null;
+						this.pnlToolTip.bottom = null;
+						this.pnlToolTip.top = 10;
+						this.pnlToolTip.left = 10;
+						break;
+					case ToolTip.POSITION_TOP_RIGHT:
+						this.pnlToolTip.left = null;
+						this.pnlToolTip.bottom = null;
+						this.pnlToolTip.top = 10;
+						this.pnlToolTip.right = 10;
+						break;
+					case ToolTip.POSITION_BOTTOM_LEFT:
+						this.pnlToolTip.top = null;
+						this.pnlToolTip.right = null;
+						this.pnlToolTip.bottom = 10;
+						this.pnlToolTip.left = 10;
+						break;
+					case ToolTip.POSITION_BOTTOM_RIGHT:
+						this.pnlToolTip.top = null;
+						this.pnlToolTip.left = null;
+						this.pnlToolTip.bottom = 10;
+						this.pnlToolTip.right = 10;
+						break;
+				}
+				
+				this.pnlToolTip.visible = true;
+				this.pnlToolTip.config = event.config;
+				this.pnlToolTip.data = event.data;
+				this.pnlToolTip.lock = event.lock;
+			}
+			private function handleHideToolTip(event:ToolTipEvent):void {
+				this.pnlToolTip.visible = false;
+				this.pnlToolTip.lock = false;
+			}			
+			private function handleLockToolTip(event:ToolTipEvent):void {
+				this.pnlToolTip.lock = true;				
+			}			
+			private function handleUnlockToolTip(event:ToolTipEvent):void {
+				this.pnlToolTip.lock = false;				
+			}
+			private function handleRollOut(event:MouseEvent):void {
+				GLOBAL_OBJECT.rollOutTooltip();
+			}
+			
+			private function handleToolTipClose(event:CloseEvent):void {
+				GLOBAL_OBJECT.tooltipClose();
+				this.pnlToolTip.lock = false;
+			}
+		]]>
+	</fx:Script>
+</s:Group>
